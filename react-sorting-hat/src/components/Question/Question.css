@@ -1,0 +1,45 @@
+.question {
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.question p {
+  font-size: 1.6rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  justify-content: center;
+  align-items: center;
+}
+form input {
+  outline: none;
+  border-radius: 3px;
+  padding: 0.8rem 1rem;
+  width: 60%;
+  font-size: 1.6rem;
+  border: 1px solid #222;
+}
+
+form button {
+  margin-top: 1rem;
+  outline: none;
+  padding: 0.8rem;
+  width: 60%;
+  font-size: 1.6rem;
+  cursor: pointer;
+  background: #222;
+  color: white;
+  border-radius: 6px;
+  opacity: 0.8;
+}
+form button:hover {
+  transform: scale(1.01);
+  opacity: 1;
+  transition: .2s ease-in-out;
+}
