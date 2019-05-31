@@ -1,7 +1,13 @@
 .house {
   width: 60%;
-  padding: 2rem 0;
-  margin: 2rem auto;
+  padding: 2rem;
+  margin: auto;
+}
+@media (max-width: 500px) {
+  .house {
+    width: 100%;
+    margin: 2rem auto;
+  }
 }
 .house h2 {
   font-size: 2rem;

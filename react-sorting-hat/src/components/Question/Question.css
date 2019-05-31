@@ -43,3 +43,12 @@ form button:hover {
   opacity: 1;
   transition: .2s ease-in-out;
 }
+
+@media (max-width: 500px) {
+  form  {
+    width: 100%;
+  }
+  form button, form input  {
+    width: 80%;
+  }
+}
