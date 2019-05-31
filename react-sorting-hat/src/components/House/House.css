@@ -1,0 +1,37 @@
+.house {
+  width: 60%;
+  padding: 2rem;
+  margin: auto;
+}
+@media (max-width: 500px) {
+  .house {
+    width: 100%;
+    margin: 2rem auto;
+  }
+}
+.house h2 {
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+  
+}
+.house p {
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 0;
+}
+
+.house h4 {
+
+  margin: 2rem auto 0.8rem auto;
+  padding: 0;
+  position: relative;
+}
+.house h4:before {
+  position: absolute;
+  content: '';
+  height: 3px;
+  background: white;
+  bottom: 0;
+  width: 17%;
+}
