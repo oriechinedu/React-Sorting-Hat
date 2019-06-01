@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header'
 import WelcomeMessage from './components/Header/WelcomeMessage'
@@ -20,9 +20,8 @@ const houses = [
   { id: 4, name: 'Gold House', color: 'gold', bio: "best house to be" }
 ]
 
-class App extends Component {
-
-  state = {
+const App = () => {
+  const initialState = {
     started: false,
     finished: false,
     currentQuestion: null,
@@ -31,82 +30,85 @@ class App extends Component {
     answer: '',
     assignedHouse: null
   }
-  startHandler = () => {
-    const [current] = this.unansweredQuestions();
-    this.setState({ started: true, currentQuestion: current })
-  }
+  const [state, setState] = useState(initialState)
 
-  unansweredQuestions = () => {
-    return this.state.questions.filter(q => {
+  const startHandler = () => {
+    const unAnsweredQuestions = unansweredQuestions();
+    const current = randomizeQuestion(unAnsweredQuestions)
+    setState({ 
+      ...state,
+      started: true, currentQuestion: current 
+    });
+    
+  }
+  const unansweredQuestions = () => {
+    return state.questions.filter(q => {
       return !q.answered
     })
   }
-  answerChangerHandler = async ({ target }) => {
-    const value = target.value;
-    await this.setState(state => {
-      return {
-        ...state,
-        answer: value
-      }
-    })
+  const  randomizeQuestion = (data) => {
+    const index = Math.floor(Math.random() * Math.floor(data.length));
+    return data[index];
   }
-  submitAnswerHandler = async (event, id) => {
-    event.preventDefault();
-    if (this.state.answer) {
-      const updatedQuestions = this.state.questions.map(question => {
-        if (question.id === id) {
-          return ({
-            ...question,
-            answered: true,
-          });
-        }
-        return question;
-      });
-      await this.setState(state => ({ ...state, questions: updatedQuestions, answer: '' }))
-      this.setNextQuestion()
-    }
-  }
-  setNextQuestion = async () => {
-    const unAnsweredQuestions = await this.unansweredQuestions();
+  const setNextQuestion = async () => {
+    const unAnsweredQuestions = await unansweredQuestions();
     if (!unAnsweredQuestions.length) {
       const assignedHouseIndex = Math.floor(Math.random() * Math.floor(4));
-      const assignedHouse = this.state.houses[assignedHouseIndex]
-      await this.setState(state => ({
+      const assignedHouse = state.houses[assignedHouseIndex]
+      await setState({
         ...state,
         started: false,
         finished: true,
         assignedHouse: assignedHouse
-      }));
+      });
     } else {
-      const current = this.randomize(unAnsweredQuestions);
-      await this.setState(state => (
+      const current = randomizeQuestion(unAnsweredQuestions);
+      await setState(
         {
           ...state,
           currentQuestion: current
         }
-      ))
+      )
     }
   }
-  randomize = (data) => {
-    const index = Math.floor(Math.random() * Math.floor(data.length));
-    return data[index];
+  const answerChangerHandler = async ({ target }) => {
+    const value = target.value;
+    await setState({
+        ...state,
+        answer: value
+      }
+    )
   }
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <WelcomeMessage startHandler={this.startHandler} showBtn={this.state.finished || this.state.started} />
-        {this.state.finished && <House house={this.state.assignedHouse} />}
-        {this.state.started && <Question
-          question={this.state.currentQuestion}
-          submitAnswer={this.submitAnswerHandler}
-          answerChanged={this.answerChangerHandler}
-          answer={this.state.answer}
-        />
+  const submitAnswerHandler = async (event, id) => {
+    event.preventDefault();
+    if (state.answer) {
+      const updatedQuestions = await state.questions.map(question => {
+        if (question.id === id) {
+          question.answered = true;
+          return question;
         }
-      </div>
-    );
+        return question;
+      });
+      await setState({ ...state, questions: updatedQuestions, answer: '' })
+      setNextQuestion()
+    }
   }
+
+ 
+  return (
+    <div className="App">
+      <Header />
+      <WelcomeMessage startHandler={startHandler} showBtn={state.finished || state.started} />
+      {state.finished && <House house={state.assignedHouse} />}
+      {state.started && <Question
+        question={state.currentQuestion}
+        submitAnswer={submitAnswerHandler}
+        answerChanged={answerChangerHandler}
+        answer={state.answer}
+      />
+      }
+    </div>
+  )
 }
 
 export default App;

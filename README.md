@@ -1,6 +1,6 @@
 # React Sorting Hat - Stretch Assignment
 
-Welcome to Hogwarts, the School of Whitchcraft and Wizardy. One of the tools that is used by students of Hogwarts on their first day entering the school is notoriously known as the `Sorting Hat`. Your goal throughout this stretch assignment is to build the `Sorting Hat` using ReactJS.
+Welcome to Hogwarts, the School of Witchcraft and Wizardy. One of the tools that is used by students of Hogwarts on their first day entering the school is notoriously known as the `Sorting Hat`. Your goal throughout this stretch assignment is to build the `Sorting Hat` using ReactJS.
 
 ### Project Set Up
 
@@ -17,7 +17,7 @@ Welcome to Hogwarts, the School of Whitchcraft and Wizardy. One of the tools tha
   - The message page should be decorated to follow the house colors and crest.
   - As a part of this message I should also be informed of any Famous Wizards that have come any gone through my house.
 
-- Use [this guide](http://harrypotter.wikia.com/wiki/Hogwarts_Houses) to help craft your questions about the characteristics of each house.
+- Use [this guide]  to help craft your questions about the characteristics of each house.
 - In the event of a tie, simply randomize and select a house from the two options.
 
 ### Stretch Problems
