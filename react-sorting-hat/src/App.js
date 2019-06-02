@@ -35,66 +35,64 @@ const App = () => {
   const startHandler = () => {
     const unAnsweredQuestions = unansweredQuestions();
     const current = randomizeQuestion(unAnsweredQuestions)
-    setState({ 
-      ...state,
-      started: true, currentQuestion: current 
-    });
-    
+    setState(prevState => ({
+      ...prevState,
+      started: true, currentQuestion: current
+    }));
+
   }
   const unansweredQuestions = () => {
     return state.questions.filter(q => {
       return !q.answered
     })
   }
-  const  randomizeQuestion = (data) => {
+  const randomizeQuestion = (data) => {
     const index = Math.floor(Math.random() * Math.floor(data.length));
     return data[index];
   }
-  const setNextQuestion = async () => {
-    const unAnsweredQuestions = await unansweredQuestions();
+  const setNextQuestion = () => {
+    const unAnsweredQuestions = unansweredQuestions();
     if (!unAnsweredQuestions.length) {
       const assignedHouseIndex = Math.floor(Math.random() * Math.floor(4));
       const assignedHouse = state.houses[assignedHouseIndex]
-      await setState({
-        ...state,
+      setState(prevState => ({
+        ...prevState,
         started: false,
         finished: true,
         assignedHouse: assignedHouse
-      });
+      }));
     } else {
       const current = randomizeQuestion(unAnsweredQuestions);
-      await setState(
-        {
-          ...state,
+      setState(prevState => ({
+          ...prevState,
           currentQuestion: current
         }
-      )
+      ))
     }
   }
-  const answerChangerHandler = async ({ target }) => {
+  const answerChangerHandler = ({ target }) => {
     const value = target.value;
-    await setState({
-        ...state,
-        answer: value
-      }
-    )
+    setState(prevState =>({
+      ...prevState,
+      answer: value
+    }))
   }
-  const submitAnswerHandler = async (event, id) => {
+  const submitAnswerHandler = (event, id) => {
     event.preventDefault();
     if (state.answer) {
-      const updatedQuestions = await state.questions.map(question => {
+      const updatedQuestions = state.questions.map(question => {
         if (question.id === id) {
           question.answered = true;
           return question;
         }
         return question;
       });
-      await setState({ ...state, questions: updatedQuestions, answer: '' })
+      setState(prevState => ({ ...prevState, questions: updatedQuestions, answer: '' }))
       setNextQuestion()
     }
   }
 
- 
+
   return (
     <div className="App">
       <Header />
